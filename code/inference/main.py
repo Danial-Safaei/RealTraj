@@ -118,7 +118,7 @@ parser.add_argument("--inter_person_appearance_path",
                     help="Under output_path, folder name for "
                     "person appearance feature per video per frame per person.")
 parser.add_argument("--inter_scene_seg_path", default="scene_seg",
-                    help="Under output_path, folder name for scen")
+                    help="Under output_path, folder name for scene segmentation results."
 parser.add_argument("--inter_future_pred_path", default="future_pred",
                     help="Under output_path, folder name for "
                          "future prediction results.")
@@ -129,7 +129,7 @@ parser.add_argument("--gpuid", default=0, type=int,
 
 # 5. hyper-parameters
 
-# 5.1 Resize the videos to this HxW, note all intermedia output will be in this
+# 5.1 Resize the videos to this HxW, note all intermediate output will be in this
 # scale.
 parser.add_argument("--max_size", default=1920, type=int,
                     help="resize the video frames to..")
