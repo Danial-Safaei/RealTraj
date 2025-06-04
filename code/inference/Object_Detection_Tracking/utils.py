@@ -39,15 +39,18 @@ class Summary():
     with open(path, "w") as f:
       f.writelines("%s" % ("\n".join(self.lines)))
 
-"""
 def grouper(l, n, fillvalue=None):
-  # given a list and n(batch_size), devide list into n sized chunks
-  # last one will fill None
-  args = [iter(l)]*n
-  out = izip_longest(*args, fillvalue=fillvalue)
-  out = list(out)
-  return out
-"""
+  """Group ``l`` into chunks of length ``n``.
+
+  Missing values are filled with ``fillvalue``. Compatible with both
+  Python 2 and 3.
+  """
+  args = [iter(l)] * n
+  if sys.version_info > (3, 0):
+    out = itertools.zip_longest(*args, fillvalue=fillvalue)
+  else:
+    out = itertools.izip_longest(*args, fillvalue=fillvalue)
+  return list(out)
 # simple FIFO class for moving average computation
 class FIFO_ME:
   def __init__(self, N):

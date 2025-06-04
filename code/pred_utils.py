@@ -663,10 +663,16 @@ class Dataset(object):
 
 
 def grouper(lst, num):
-  args = [iter(lst)]*num
-  out = itertools.izip_longest(*args, fillvalue=None)
-  out = list(out)
-  return out
+  """Split ``lst`` into chunks of length ``num``.
+
+  Works on both Python 2 and 3.
+  """
+  args = [iter(lst)] * num
+  if sys.version_info > (3, 0):
+    out = itertools.zip_longest(*args, fillvalue=None)
+  else:
+    out = itertools.izip_longest(*args, fillvalue=None)
+  return list(out)
 
 
 def compute_ap(lists):
