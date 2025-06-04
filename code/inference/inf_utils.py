@@ -343,10 +343,10 @@ def load_obj_boxes(json_file, topk, object2id):
 
 
 def get_nearest(frame_idxs, frame_idx):
-  """Since we don"t run scene seg on every frame,we want to find the nearest."""
+  """Since we don"t run scene seg on every frame, we want to find the nearest."""
   frame_idxs = np.array(frame_idxs)
-  cloests_i = (np.abs(frame_idxs - frame_idx)).argmin()
-  return frame_idxs[cloests_i]
+  closest_i = (np.abs(frame_idxs - frame_idx)).argmin()
+  return frame_idxs[closest_i]
 
 
 # ------------------------ for extracting person appearance feature
@@ -396,7 +396,6 @@ def roi_align(featuremap, boxes, output_shape_h, output_shape_w):
 def load_model_weights(model_path, sess, top_scope=None):
   """Load model weights into tf Graph."""
 
-  tf.global_variables_initializer().run()
   allvars = tf.global_variables()
   allvars = [var for var in allvars if "global_step" not in var.name]
   restore_vars = allvars
@@ -408,6 +407,7 @@ def load_model_weights(model_path, sess, top_scope=None):
   if top_scope is not None:
     restore_vars = [var for var in restore_vars
                     if var.name.split(":")[0].split("/")[0] == top_scope]
+  sess.run(tf.variables_initializer(restore_vars))
   saver = tf.train.Saver(restore_vars, max_to_keep=5)
 
   load_from = model_path
